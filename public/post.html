@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+        // see Constraint Validation API 
+        // https://developer.mozilla.org/en-US/docs/Web/API/Constraint_validation
+
+        let check = () => {
+            
+            let bidaltzekoOK = true;
+
+            let pass = document.getElementById("password");
+            let cpass= document.getElementById("Confirm password")
+            cpass.setCustomValidity("");
+
+            let pass1= pass.value;
+            let pass2= cpass.value;
+            if (pass1!=pass2) {
+                cpass.setCustomValidity("pasahitzak ez dira berdinak");
+                bidaltzekoOK = false;
+            }
+
+            return bidaltzekoOK;
+        }
+
+        window.onload = () => {
+            document.getElementById("Confirm password").oninput = check;
+            document.querySelector("#formularioa").addEventListener("submit", (e) => {
+                e.preventDefault();
+                if (check()) e.target.submit();
+            });
+
+        };
+    </script>
+</head>
+<body>
+    <form action="/bezeroa" method="POST" id="formularioa">
+        Izena: <input type="text" name="izena" required><br>
+        Email: <input type="text" name="Email" id="Email" required pattern="[a-z]{1,}@[a-z]{1,}"><br>
+        Password: <input type="password" name="password" id="password" required><br>
+        Confirm Password: <input type="password" name="Confirmpassword" id="Confirmpassword" required><br>
+        Gender: <select name="gender">
+            <option value="Male" selected>Male</option>
+            <option value="Female" >Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <br>
+        Date of Birth: <input type="date" name="dateofbirth" id="dateofbirth" required><br>
+        Address: <input type="text" name="Address" id="Address" ><br>
+        City: <input type="text" name="city" id="city" required minlength="3"><br>
+        Zip Code: <input type="text" name="zipcode" id="zipcode" required pattern="[0-9]{1,}"><br>
+        I aggree to the terms an conditions: <input type="checkbox" name="terms" id="terms" required><br>
+        I want to receive the newsletter: yes<input type="radio" name="newsletter" id="yes" checked> no <input type="radio" name="newsletter" id="no"> <br>
+        <input type="submit" value="Bidali">
+    </form>
+</body>
+</html>
